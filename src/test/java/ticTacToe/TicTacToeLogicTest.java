@@ -36,7 +36,7 @@ class TicTacToeLogicTest {
 	}
 	
 	@Test
-	void EmptyGrid_setGameStateHolderToContinue_CheckGridTest() {
+	void checkGrid_ShouldSetGameStateHolderToContinue_WhenGridIsEmpty() {
 		when(mockedGrid.get(anyInt(), anyInt())).thenReturn(ButtonState.EMPTY);
 		when(mockedGrid.isFull()).thenReturn(false);
 		when(mockedGrid.size()).thenReturn(3);
@@ -46,7 +46,20 @@ class TicTacToeLogicTest {
 	}
 	
 	@Test
-	void FullGrid_setGameStateHolderToNoWinner_CheckGridTest() {
+	void checkGrid_ShouldSetGameStateHolderToContinue_WhenGameNotFinished(){
+		when(mockedGrid.get(anyInt(), anyInt())).thenReturn(ButtonState.EMPTY);
+		when(mockedGrid.get(0, 0)).thenReturn(ButtonState.CROSS);
+		when(mockedGrid.get(1, 0)).thenReturn(ButtonState.CROSS);
+		when(mockedGrid.get(0, 2)).thenReturn(ButtonState.CROSS);
+		when(mockedGrid.get(1, 2)).thenReturn(ButtonState.CROSS);
+		when(mockedGrid.isFull()).thenReturn(false);
+		when(mockedGrid.size()).thenReturn(3);
+		logicToTest.checkGrid();
+		assertEquals(GameState.CONTINUE,gameState.getState());
+	}
+	
+	@Test
+	void checkGrid_ShouldSetGameStateHolderToNoWinner_WhenGridIsFull() {
 		when(mockedGrid.get(0, 0)).thenReturn(ButtonState.CROSS);
 		when(mockedGrid.get(1, 0)).thenReturn(ButtonState.CIRCLE);
 		when(mockedGrid.get(2, 0)).thenReturn(ButtonState.CROSS);
